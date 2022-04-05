@@ -1,7 +1,6 @@
-const sumString = (line) => {
-  if (line === "" || line.trim() === "") return 0;
+const sum = (line) => {
+  const numbers = filterOnlyNumbers(line);
 
-  const numbers = line.split(",");
   if (numbers.length !== 0) {
     let result = 0;
     numbers.forEach((number) => {
@@ -10,10 +9,19 @@ const sumString = (line) => {
     });
     return result;
   }
-  
-  return line;
+  return "Unexpected error"
+};
+
+
+
+const filterOnlyNumbers = (line) => {
+  if (line.includes("\n")) {
+    const splitByJumpLine = line.split("\n".trim());
+    return splitByJumpLine.filter((number) => !isNaN(parseInt(number)));
+  }
+  return line.split(",");
 };
 
 module.exports = {
-  sumString,
+  sum,
 };
