@@ -11,7 +11,7 @@ describe("StringCalculator Should", () => {
     expect(sum("  ")).toBe(0);
   });
 
-  test("return the result of a sum when the delimeter is a coma", () => {
+  test("return the result of a sum when the delimeter is a comma", () => {
     expect(sum("1,2")).toBe(3);
     expect(sum("12,2")).toBe(14);
   });
@@ -46,6 +46,6 @@ describe("StringCalculator Should", () => {
   test("ignore numbers greater and equal to 1000", () => {
     expect(sum("1000,2")).toBe(2);
     expect(sum("\n1000,2")).toBe(2);
-    expect(sum("//```\n10```2")).toBe(12);
+    expect(sum("//```\n1000```2")).toBe(2);
   });
 });

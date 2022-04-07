@@ -12,7 +12,6 @@ const sum = (line) => {
       }
       result += number;
     });
-
     if (negativeNumbers.length !== 0) {
       throw new Error(`Negatives not allowed: ${negativeNumbers.join(", ")}`);
     }
@@ -22,35 +21,32 @@ const sum = (line) => {
 
 const filterOnlyNumbers = (line) => {
   if (line.startsWith("//")) {
-    const [delimiters, lineProcessed] = getCustomDelimiters(line);
-    return processByDelimiters(lineProcessed, delimiters);
+    const [delimiters, lineProcessed] =
+      getCustomDelimitersAndLineProcessed(line);
+    return processedLineByDelimiters(lineProcessed, delimiters);
   }
   const delimiters = /,|\n/;
-  return processByDelimiters(line, delimiters);
+  return processedLineByDelimiters(line, delimiters);
 };
 
-const processByDelimiters = (line, delimiters) => {
-  const splitByDelimiters = line.split(delimiters);
-  return splitByDelimiters
-    .map((number) => parseInt(number))
-    .filter((number) => !isNaN(number));
-};
-
-const getCustomDelimiters = (line) => {
+const getCustomDelimitersAndLineProcessed = (line) => {
   const separators = line.substring(2, line.indexOf("\n"));
   const newLine = line.substring(line.indexOf("\n") + 1);
-
   const regexContainerSeparator = /[\[\]]/;
 
   const delimiters = separators
     .split(regexContainerSeparator)
     .filter((element) => element !== "");
   const delimiterRegExp = new RegExp(`[${delimiters.join("")}]`);
-
   return [delimiterRegExp, newLine];
 };
 
-
+const processedLineByDelimiters = (line, delimiters) => {
+  const splitByDelimiters = line.split(delimiters);
+  return splitByDelimiters
+    .map((number) => parseInt(number))
+    .filter((number) => !isNaN(number));
+};
 
 module.exports = {
   sum,
