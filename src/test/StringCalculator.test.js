@@ -1,14 +1,3 @@
-/*
- 1      => 1
- ""     => 0
- " "    => 0
- 1,2    => 3
- 1,2,,  => 3
- 1,2,A,,=> 3
- 1\n2,3 => 6
- "1,\n" => 1
-*/
-
 const { sum } = require("../StringCalculator");
 
 describe("StringCalculator Should", () => {
@@ -36,7 +25,7 @@ describe("StringCalculator Should", () => {
   });
 
   test("return the result even when the line contains jumps line between numbers", () => {
-    expect(sum("1\n2,3")).toBe(6);
+    expect(sum("11\n2,3")).toBe(16);
     expect(sum("1,\n")).toBe(1);
     expect(sum("\n\n,1,\n2")).toBe(3);
   });
@@ -44,7 +33,7 @@ describe("StringCalculator Should", () => {
   test("sum the numbers even when they are separated by custom delimiters", () => {
     expect(sum("//;\n1;2;3")).toBe(6);
     expect(sum("//[*][%]\n1*2%3")).toBe(6);
-    expect(sum("“//[***]\n1***2***3”")).toBe(6);
+    expect(sum("//[***]\n1***2***3")).toBe(6);
   });
 
   test("throw an exception if the line contains negative numbers", () => {
@@ -56,7 +45,7 @@ describe("StringCalculator Should", () => {
 
   test("ignore numbers greater and equal to 1000", () => {
     expect(sum("1000,2")).toBe(2);
-    //TODO: Arreglar esto!
-   expect(sum("\n1000,2")).toBe(2);
+    expect(sum("\n1000,2")).toBe(2);
+    expect(sum("//```\n10```2")).toBe(12);
   });
 });
